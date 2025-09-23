@@ -30,4 +30,6 @@ def canUnlockAll(boxes):
                 break
             else:
                 boolean = False
+    if boolean == False:
+            return boolean
     return boolean 

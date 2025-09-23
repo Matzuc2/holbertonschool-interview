@@ -1,35 +1,16 @@
 #!/usr/bin/python3
 
-"""
-Module: 0-lockboxes
-
-Ce module fournit une fonction pour déterminer si toutes les boîtes d'une liste peuvent être ouvertes.
-Chaque boîte peut contenir des clés permettant d'ouvrir d'autres boîtes.
-"""
-
 def canUnlockAll(boxes):
-    """
-    Détermine si toutes les boîtes peuvent être ouvertes.
+    total_boxes = len(boxes)
+    opened_boxes = {0}
+    keys_to_use = list(boxes[0])
 
-    Args:
-        boxes (list of list of int): Liste de boîtes, chaque boîte contient des clés (indices d'autres boîtes).
+    while keys_to_use:
+        current_key = keys_to_use.pop()
+        if current_key < total_boxes:
+            if current_key not in opened_boxes:
+                opened_boxes.add(current_key)
+                for new_key in boxes[current_key]:
+                    keys_to_use.append(new_key)
 
-    Returns:
-        bool: True si toutes les boîtes peuvent être ouvertes, sinon False.
-    """
-    keys = []
-    for i, boxe in enumerate(boxes):
-        if i == 0:
-            for key in boxe:
-                keys.append(key)
-        for key in keys:
-            if key == i:
-                for key in boxe:
-                    keys.append(key)
-                boolean = True
-                break
-            else:
-                boolean = False
-    if boolean == False:
-            return boolean
-    return boolean 
+    return len(opened_boxes) == total_boxes

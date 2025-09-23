@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """hello world """
 
+
 def canUnlockAll(boxes):
     total_boxes = len(boxes)
     opened_boxes = {0}

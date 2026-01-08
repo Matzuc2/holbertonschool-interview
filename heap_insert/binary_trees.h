@@ -18,9 +18,11 @@ typedef struct binary_tree_s
     struct binary_tree_s *left;
     struct binary_tree_s *right;
 } binary_tree_t;
+typedef struct binary_tree_s heap_t;
 
 /* Function prototypes */
 binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
 void binary_tree_print(const binary_tree_t *tree);
+binary_tree_t *heap_insert(binary_tree_t **root, int value);
 
 #endif /* BINARY_TREES_H */

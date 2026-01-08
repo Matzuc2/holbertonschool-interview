@@ -6,7 +6,7 @@
 /* Forward declarations */
 static size_t tree_size(const heap_t *tree);
 static heap_t *get_node_at_index(heap_t *root, size_t index);
-static void heapify_up(heap_t *node);
+static heap_t *heapify_up(heap_t *node);
 
 /**
  * heap_insert - Inserts a value into a Max Binary Heap
@@ -45,10 +45,8 @@ heap_t *heap_insert(heap_t **root, int value)
 	else
 		parent->right = new_node;
 
-	/* Restore heap property */
-	heapify_up(new_node);
-
-	return (new_node);
+	/* Restore heap property and return final position */
+	return (heapify_up(new_node));
 }
 
 /**
@@ -97,8 +95,10 @@ static heap_t *get_node_at_index(heap_t *root, size_t index)
 /**
  * heapify_up - Restore max heap ordering
  * @node: Node to heapify upward
+ *
+ * Return: Pointer to the node containing the inserted value
  */
-static void heapify_up(heap_t *node)
+static heap_t *heapify_up(heap_t *node)
 {
 	int tmp;
 
@@ -109,4 +109,6 @@ static void heapify_up(heap_t *node)
 		node->parent->n = tmp;
 		node = node->parent;
 	}
+
+	return (node);
 }

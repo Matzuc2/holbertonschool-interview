@@ -25,14 +25,15 @@ def main():
                 print_line_count += 10
                 status_dict = {}
                 for line in lines:
+                    print(line.split(' '))
                     if len(line.split(' ')) <  9 :
                         continue
                     status_code = line.split(' ')[7]
-                    # if status_code.isdigit():
-                    if status_code not in status_dict:
-                        status_dict[status_code] = 1
-                    else:
-                         status_dict[status_code] += 1
+                    if status_code.isdigit():
+                        if status_code not in status_dict:
+                            status_dict[status_code] = 1
+                        else:
+                            status_dict[status_code] += 1
                     file_size = int(line.split(' ')[8])
                     total_file_size += int(file_size)
                 print(f"File size: {total_file_size}")
@@ -45,11 +46,11 @@ def main():
             if line_count < 9:
                 continue
             status_code = line.split(' ')[7]
-            # if status_code.isdigit() :
-            if status_code not in status_dict:
-                status_dict[status_code] = 1
-            else:
-                status_dict[status_code] += 1
+            if status_code.isdigit() :
+                if status_code not in status_dict:
+                    status_dict[status_code] = 1
+                else:
+                    status_dict[status_code] += 1
             file_size = line.split(' ')[8]
             total_file_size += int(file_size)
         print(f"File size: {total_file_size}")

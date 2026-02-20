@@ -25,8 +25,8 @@ def main():
                 print_line_count += 10
                 status_dict = {}
                 for line in lines:
-                    if len(line.split(' ')) <  9 :
-                        continue
+                    # if len(line.split(' ')) <  9 :
+                    #     continue
                     status_code = line.split(' ')[7]
                     if status_code.isdigit():
                         if status_code not in status_dict:
@@ -41,8 +41,9 @@ def main():
         total_file_size = 0
         status_dict = {}
         for line in lines:
-            if len(line.split(' ')) < 9:
-                continue
+            # line_count = len(line.split(' '))
+            # if line_count < 9:
+            #     continue
             status_code = line.split(' ')[7]
             if status_code.isdigit() :
                 if status_code not in status_dict:

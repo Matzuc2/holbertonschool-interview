@@ -49,7 +49,6 @@ def main():
                 print(f"{key}: {value}")
     except KeyboardInterrupt:
         status_dict = {}
-        total_file_size = 0
         for line in lines:
             status_code = line.split(' ')[7]
             if status_code not in status_dict:

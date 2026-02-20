@@ -25,6 +25,8 @@ def main():
                 print_line_count += 10
                 status_dict = {}
                 for line in lines:
+                    if not line.split(' ')[7] or type(line.split(' ')[7]) != int:
+                        continue
                     status_code = line.split(' ')[7]
                     if status_code not in status_dict:
                         status_dict[status_code] = 1
@@ -38,6 +40,8 @@ def main():
         total_file_size = 0
         status_dict = {}
         for line in lines:
+            if not line.split(' ')[7] or type(line.split(' ')[7]) != int:
+                continue
             status_code = line.split(' ')[7]
             if status_code not in status_dict:
                 status_dict[status_code] = 1

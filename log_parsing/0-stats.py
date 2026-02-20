@@ -18,6 +18,8 @@ def main():
     lines = []
     print_line_count = 10
     total_file_size = 0
+    valid_status_codes = ['200', '301', '400', '401', '403', '404', '405', '500']
+    
     try:
         for line in sys.stdin:
             lines.append(line)
@@ -31,7 +33,7 @@ def main():
                     if len(line.split(' ')) != 9:
                         continue
                     status_code = line.split(' ')[7]
-                    if status_code.isdigit():
+                    if status_code in valid_status_codes:
                         if status_code not in status_dict:
                             status_dict[status_code] = 1
                         else:
@@ -44,7 +46,7 @@ def main():
             if len(line.split(' ')) != 9:
                 continue
             status_code = line.split(' ')[7]
-            if status_code.isdigit():
+            if status_code in valid_status_codes:
                 if status_code not in status_dict:
                     status_dict[status_code] = 1
                 else:
@@ -58,7 +60,7 @@ def main():
             if len(line.split(' ')) != 9:
                 continue
             status_code = line.split(' ')[7]
-            if status_code.isdigit():
+            if status_code in valid_status_codes:
                 if status_code not in status_dict:
                     status_dict[status_code] = 1
                 else:

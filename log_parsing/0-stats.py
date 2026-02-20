@@ -37,13 +37,13 @@ def main():
                     print(f"{key}: {value}")
         total_file_size = 0
         status_dict = {}
-        for line in sys.stdin:
-            status_code = line.split(' ')[7]
+        for line in lines:
+            status_code = line.split(' ')[6]
             if status_code not in status_dict:
                 status_dict[status_code] = 1
             else:
                 status_dict[status_code] += 1
-            file_size = line.split(' ')[8]
+            file_size = line.split(' ')[7]
             total_file_size += int(file_size)
             print(f"File size: {total_file_size}")
             for key, value in sorted(status_dict.items()):
@@ -61,7 +61,6 @@ def main():
         print(f"File size: {total_file_size}")
         for key, value in sorted(status_dict.items()):
             print(f"{key}: {value}")
-
 
 if __name__ == "__main__":
     main()

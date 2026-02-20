@@ -45,9 +45,9 @@ def main():
                 status_dict[status_code] += 1
             file_size = line.split(' ')[8]
             total_file_size += int(file_size)
-            print(f"File size: {total_file_size}")
-            for key, value in sorted(status_dict.items()):
-                print(f"{key}: {value}")
+        print(f"File size: {total_file_size}")
+        for key, value in sorted(status_dict.items()):
+            print(f"{key}: {value}")
     except KeyboardInterrupt:
         status_dict = {}
         for line in lines:

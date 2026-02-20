@@ -36,6 +36,7 @@ def main():
                 for key, value in sorted(status_dict.items()):
                     print(f"{key}: {value}")
         total_file_size = 0
+        lines = []
         for index, line in enumerate(sys.stdin):
             lines.append(line)
             for line in lines:

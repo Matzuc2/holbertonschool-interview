@@ -16,11 +16,12 @@ import sys
 def main():
     """Main function to process log entries."""
     lines = []
+    print_line_count = 10
     try:
         for index, line in enumerate(sys.stdin):
             lines.append(line)
-    
-            if (index % 10 == 0 and index != 0):
+            if (len(lines) == print_line_count):
+                print_line_count += 10
                 status_dict = {}
                 total_file_size = 0
                 for line in lines:

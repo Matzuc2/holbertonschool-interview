@@ -25,28 +25,26 @@ def main():
                 print_line_count += 10
                 status_dict = {}
                 for line in lines:
-                    if not line.split(' ')[7] or type(line.split(' ')[7]) != int:
-                        continue
                     status_code = line.split(' ')[7]
-                    if status_code not in status_dict:
-                        status_dict[status_code] = 1
-                    else:
-                        status_dict[status_code] += 1
-                    file_size = line.split(' ')[8]
-                    total_file_size += int(file_size) or 0
+                    if status_code.isdigit():
+                        if status_code not in status_dict:
+                            status_dict[status_code] = 1
+                        else:
+                            status_dict[status_code] += 1
+                    file_size = int(line.split(' ')[8])
+                    total_file_size += int(file_size)
                 print(f"File size: {total_file_size}")
                 for key, value in sorted(status_dict.items()):
                     print(f"{key}: {value}")
         total_file_size = 0
         status_dict = {}
         for line in lines:
-            if not line.split(' ')[7] or type(line.split(' ')[7]) != int:
-                continue
             status_code = line.split(' ')[7]
-            if status_code not in status_dict:
-                status_dict[status_code] = 1
-            else:
-                status_dict[status_code] += 1
+            if status_code.isdigit() :
+                if status_code not in status_dict:
+                    status_dict[status_code] = 1
+                else:
+                    status_dict[status_code] += 1
             file_size = line.split(' ')[8]
             total_file_size += int(file_size)
         print(f"File size: {total_file_size}")

@@ -25,7 +25,7 @@ def main():
                 print_line_count += 10
                 status_dict = {}
                 for line in lines:
-                    if len(line.split(' ')) <  9 :
+                    if len(line.split(' ')) <  7 :
                         continue
                     status_code = line.split(' ')[-2]
                     if status_code.isdigit():
@@ -42,7 +42,7 @@ def main():
         status_dict = {}
         for line in lines:
             line_count = len(line.split(' '))
-            if line_count < 9:
+            if line_count < 7:
                 continue
             status_code = line.split(' ')[-2]
             if status_code.isdigit() :

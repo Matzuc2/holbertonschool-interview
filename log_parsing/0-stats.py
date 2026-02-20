@@ -17,15 +17,18 @@ def main():
     """Main function to process log entries."""
     lines = []
     print_line_count = 10
+    total_file_size = 0  # MOVED OUTSIDE THE LOOP
     try:
         for line in sys.stdin:
-            total_file_size = 0
             lines.append(line)
+            if len(line.split(' ')) == 9:
+                file_size = int(line.split(' ')[8])
+                total_file_size += file_size  # ACCUMULATE HERE
             if (len(lines) == print_line_count):
                 print_line_count += 10
                 status_dict = {}
                 for line in lines:
-                    if len(line.split(' ')) !=  9 :
+                    if len(line.split(' ')) != 9:
                         continue
                     status_code = line.split(' ')[7]
                     if status_code.isdigit():
@@ -33,40 +36,37 @@ def main():
                             status_dict[status_code] = 1
                         else:
                             status_dict[status_code] += 1
-                    file_size = int(line.split(' ')[8])
-                    total_file_size += int(file_size)
                 print(f"File size: {total_file_size}")
                 for key, value in sorted(status_dict.items()):
                     print(f"{key}: {value}")
-        total_file_size = 0
         status_dict = {}
         for line in lines:
             if len(line.split(' ')) != 9:
                 continue
             status_code = line.split(' ')[7]
-            if status_code.isdigit() :
+            if status_code.isdigit():
                 if status_code not in status_dict:
                     status_dict[status_code] = 1
                 else:
                     status_dict[status_code] += 1
-            file_size = line.split(' ')[8]
-            total_file_size += int(file_size)
         print(f"File size: {total_file_size}")
         for key, value in sorted(status_dict.items()):
             print(f"{key}: {value}")
     except KeyboardInterrupt:
         status_dict = {}
         for line in lines:
+            if len(line.split(' ')) != 9:
+                continue
             status_code = line.split(' ')[7]
-            if status_code not in status_dict:
-                status_dict[status_code] = 1
-            else:
-                status_dict[status_code] += 1
-            file_size = line.split(' ')[8]
-        total_file_size += int(file_size) or 0
+            if status_code.isdigit():
+                if status_code not in status_dict:
+                    status_dict[status_code] = 1
+                else:
+                    status_dict[status_code] += 1
         print(f"File size: {total_file_size}")
         for key, value in sorted(status_dict.items()):
             print(f"{key}: {value}")
+
 
 if __name__ == "__main__":
     main()

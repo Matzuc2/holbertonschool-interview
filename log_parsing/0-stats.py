@@ -19,7 +19,7 @@ def main():
     print_line_count = 10
     total_file_size = 0
     try:
-        for index, line in enumerate(sys.stdin):
+        for line in sys.stdin:
             lines.append(line)
             if (len(lines) == print_line_count):
                 print_line_count += 10
@@ -37,7 +37,7 @@ def main():
                     print(f"{key}: {value}")
         total_file_size = 0
         lines = []
-        for index, line in enumerate(sys.stdin):
+        for line in sys.stdin:
             lines.append(line)
             for line in lines:
                 status_dict = {}

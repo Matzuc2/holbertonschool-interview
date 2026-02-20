@@ -25,7 +25,6 @@ def main():
                 print_line_count += 10
                 status_dict = {}
                 for line in lines:
-                    print(line.split(' '))
                     if len(line.split(' ')) <  9 :
                         continue
                     status_code = line.split(' ')[7]

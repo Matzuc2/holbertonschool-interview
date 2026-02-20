@@ -17,9 +17,9 @@ def main():
     """Main function to process log entries."""
     lines = []
     print_line_count = 10
-    total_file_size = 0
     try:
         for line in sys.stdin:
+            total_file_size = 0
             lines.append(line)
             if (len(lines) == print_line_count):
                 print_line_count += 10

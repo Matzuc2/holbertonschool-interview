@@ -35,18 +35,21 @@ def main():
                 print(f"File size: {total_file_size}")
                 for key, value in sorted(status_dict.items()):
                     print(f"{key}: {value}")
-        for line in lines:
-            status_dict = {}
-            status_code = line.split(' ')[7]
-            if status_code not in status_dict:
-                status_dict[status_code] = 1
-            else:
-                status_dict[status_code] += 1
-                file_size = line.split(' ')[8]
-                total_file_size += int(file_size) or 0
-            print(f"File size: {total_file_size}")
-            for key, value in sorted(status_dict.items()):
-                print(f"{key}: {value}")
+        total_file_size = 0
+        for index, line in enumerate(sys.stdin):
+            lines.append(line)
+            for line in lines:
+                status_dict = {}
+                status_code = line.split(' ')[7]
+                if status_code not in status_dict:
+                    status_dict[status_code] = 1
+                else:
+                    status_dict[status_code] += 1
+                    file_size = line.split(' ')[8]
+                    total_file_size += int(file_size)
+                print(f"File size: {total_file_size}")
+                for key, value in sorted(status_dict.items()):
+                    print(f"{key}: {value}")
     except KeyboardInterrupt:
         status_dict = {}
         for line in lines:

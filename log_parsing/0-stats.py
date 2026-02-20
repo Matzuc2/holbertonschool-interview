@@ -37,7 +37,6 @@ def main():
                     print(f"{key}: {value}")
         for line in lines:
             status_dict = {}
-            total_file_size = 0
             status_code = line.split(' ')[7]
             if status_code not in status_dict:
                 status_dict[status_code] = 1

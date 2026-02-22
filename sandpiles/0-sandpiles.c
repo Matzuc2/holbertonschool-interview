@@ -43,6 +43,24 @@ static int is_stable(int grid[3][3])
 }
 
 /**
+ * add_to_neighbors - Add grains to neighbors of a toppling cell
+ * @grid: 3x3 grid
+ * @i: Row index
+ * @j: Column index
+ */
+static void add_to_neighbors(int grid[3][3], int i, int j)
+{
+	if (i > 0)
+		grid[i - 1][j] += 1;
+	if (i < 2)
+		grid[i + 1][j] += 1;
+	if (j > 0)
+		grid[i][j - 1] += 1;
+	if (j < 2)
+		grid[i][j + 1] += 1;
+}
+
+/**
  * topple - Perform one round of toppling
  * @grid: 3x3 grid
  */
@@ -51,48 +69,20 @@ static void topple(int grid[3][3])
 	int i, j;
 	int temp[3][3] = {{0}};
 
-	/* Mark cells that need to topple */
 	for (i = 0; i < 3; i++)
-	{
 		for (j = 0; j < 3; j++)
-		{
 			if (grid[i][j] > 3)
 				temp[i][j] = 1;
-		}
-	}
 
-	/* Subtract 4 from cells that topple */
 	for (i = 0; i < 3; i++)
-	{
 		for (j = 0; j < 3; j++)
-		{
 			if (temp[i][j])
 				grid[i][j] -= 4;
-		}
-	}
 
-	/* Add 1 to neighbors of cells that toppled */
 	for (i = 0; i < 3; i++)
-	{
 		for (j = 0; j < 3; j++)
-		{
 			if (temp[i][j])
-			{
-				/* Add to top neighbor */
-				if (i > 0)
-					grid[i - 1][j] += 1;
-				/* Add to bottom neighbor */
-				if (i < 2)
-					grid[i + 1][j] += 1;
-				/* Add to left neighbor */
-				if (j > 0)
-					grid[i][j - 1] += 1;
-				/* Add to right neighbor */
-				if (j < 2)
-					grid[i][j + 1] += 1;
-			}
-		}
-	}
+				add_to_neighbors(grid, i, j);
 }
 
 /**

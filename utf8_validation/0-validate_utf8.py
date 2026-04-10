@@ -4,12 +4,9 @@
 
 def validUTF8(data):
     """verify if a data of int is utf8 convertible"""
-    try:
-        for d in data:
-            bin_int = bin(d)
-            list_bin_str = list(bin_int)
-            if len(list_bin_str) > 9:
-                return False
-        return True
-    except ValueError:
-        return False
+    for d in data:
+        try:
+            binary_int = d.to_bytes(1)
+            return True
+        except OverflowError:
+            return False

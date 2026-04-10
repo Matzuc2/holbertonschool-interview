@@ -5,7 +5,9 @@
 def validUTF8(data):
     """verify is a data of int is utf8 convertible"""
     try:
-        byte_data = bytearray(data)
+        for d in data:
+            if d > 255:
+                return False
         return True
-    except:
+    except ValueError:
         return False

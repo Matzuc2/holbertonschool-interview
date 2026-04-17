@@ -6,15 +6,17 @@ def validUTF8(data):
     """verify if a data of int is utf8 convertible"""
     for i, d in enumerate(data):
         binary_int = bin(d)
-        # print(f"{binary_int}, binary_int")
+        print(f"{binary_int}, binary_int")
         binary_str = split_binary_len9(binary_int)
-        # print(f"{binary_str}, binary_str")
+        print(f"{binary_str}, binary_str")
         decimal_int = int(binary_str, 2)
-        # print(f"{decimal_int} decimal int")
+        print(f"{decimal_int} decimal int")
         if decimal_int > 255:
             return False
         count_of_one = count_byte_expected_number(binary_str)
-        # print(count_of_one)
+        if count_of_one > 3:
+            return False
+        print(count_of_one)
         try:
             data[i + count_of_one]
         except IndexError:

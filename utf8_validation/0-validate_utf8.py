@@ -4,6 +4,8 @@
 
 def validUTF8(data):
     """verify if a data of int is utf8 convertible"""
+    if not all(isinstance(item, (int)) for item in data):
+        return False
     for i, d in enumerate(data):
         binary_int = bin(d)
         # print(f"{binary_int}, binary_int")

@@ -30,7 +30,7 @@ def validUTF8(data):
             try:
                 dirty_byte = split_binary_len9(bin(data[i + count_of_one + 1]))
                 new_binary_list.append(dirty_byte)
-                if list(dirty_byte)[0] != "0":
+                if list(dirty_byte)[0] == "1" and list(dirty_byte[1]) == "0":
                     return False
             except UnboundLocalError and IndexError:
                 pass

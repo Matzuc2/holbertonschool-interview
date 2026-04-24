@@ -8,26 +8,32 @@ def validUTF8(data):
         return False
     for i, d in enumerate(data):
         binary_int = bin(d)
-        # print(f"{binary_int}, binary_int")
         binary_str = split_binary_len9(binary_int)
-        # print(f"{binary_str}, binary_str")
         decimal_int = int(binary_str, 2)
-        # print(f"{decimal_int} decimal int")
         if decimal_int > 255:
             return False
         count_of_one = count_byte_expected_number(binary_str)
         if count_of_one > 3:
             return False
-        # print(count_of_one)
         try:
             data[i + count_of_one]
         except IndexError:
             return False
         if count_of_one > 0:
-            for next_byte_index in range(0, count_of_one):
+            new_binary_list = []
+            new_binary_list.append(binary_str)
+            for next_byte_index in range(1, count_of_one):
                 next_byte = split_binary_len9(bin(data[i + next_byte_index]))
+                new_binary_list.append(next_byte)
                 if list(next_byte)[0] != "1":
                     return False
+            try:
+                dirty_byte = split_binary_len9(bin(data[i + count_of_one + 1]))
+                new_binary_list.append(dirty_byte)
+                if list(dirty_byte)[0] != "0":
+                    return False
+            except UnboundLocalError and IndexError:
+                pass
     return True
 
 
@@ -70,3 +76,13 @@ def count_byte_expected_number(binary_str: str):
         except IndexError:
             return count_of_one
     return count_of_one
+
+
+def is_byte_legit(byte: int, data: list[int]):
+    index_byte = data.index(byte)
+    for i, item in enumerate(data):
+        if i < index_byte and data[i] != data[index_byte]:
+            data.pop(i)
+    binary_int = bin(byte)
+    binary_str = split_binary_len9(binary_int)
+    count_byte_number = count_byte_expected_number(binary_str)

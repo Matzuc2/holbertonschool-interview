@@ -20,7 +20,7 @@ async function GetCharactersFromUrls(urlList){
 
 }
 async function GetCharactersWithUrlFrom(json){
-    const characters_url = json["characters"]
+    const characters_url = json['characters']
     const characterPromises = characters_url.map(async (character_url)=>{
         try{
             const response = await fetch(character_url)

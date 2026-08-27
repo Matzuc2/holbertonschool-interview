@@ -1,58 +1,84 @@
 #!/usr/bin/node
 
-import process from 'process'
+const process = require('process');
+const request = require('request');
 
-async function GetMovieJsonContent(movieId){
-  const url = `https://swapi-api.hbtn.io/api/films/${movieId}`;
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`Response status: ${response.status}`);
-    }
+function GetMovieJsonContent(movieId) {
+    return new Promise((resolve, reject) => {
+        const url = `https://swapi-api.hbtn.io/api/films/${movieId}`;
 
-    const result = await response.json();
-    return result
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-async function GetCharactersFromUrls(urlList){
-
-}
-async function GetCharactersWithUrlFrom(json){
-    const characters_url = json['characters']
-    const characterPromises = characters_url.map(async (character_url)=>{
-        try{
-            const response = await fetch(character_url)
-            if(!response.ok){
-                throw new Error(`Response status: ${response.status}`);
+        request(url, (error, response, body) => {
+            if (error) {
+                reject(error);
+                return;
             }
-            const character = await response.json()
-            return character
-        }
-        catch (error) {
-            console.error(error.message);
-        }
-    })
-    const characters = Promise.all(characterPromises)
-    return characters
+
+            if (response.statusCode !== 200) {
+                reject(new Error(`Response status: ${response.statusCode}`));
+                return;
+            }
+
+            const movieContent = JSON.parse(body);
+            resolve(movieContent);
+        });
+    });
 }
 
-function GetCharacterNames(characters){
-    const characterNames = []
-    characters.map((character)=>{
-        const characterName = character["name"]
-        characterNames.push(characterName)
-    })
-    return characterNames
+function GetCharacter(characterUrl) {
+    return new Promise((resolve, reject) => {
+        request(characterUrl, (error, response, body) => {
+            if (error) {
+                reject(error);
+                return;
+            }
+
+            if (response.statusCode !== 200) {
+                reject(new Error(`Response status: ${response.statusCode}`));
+                return;
+            }
+
+            const character = JSON.parse(body);
+            resolve(character);
+        });
+    });
 }
 
-const movieId = process.argv[2]
-const movieContent = await GetMovieJsonContent(movieId)
-const characters_json = await GetCharactersWithUrlFrom(movieContent)
-const characterNames = GetCharacterNames(characters_json)
+function GetCharactersWithUrlFrom(json) {
+    const characterUrls = json.characters;
 
-characterNames.map((characterName)=>{
-    console.log(characterName)
-})
+    const characterDatas = characterUrls.map((characterURL) => {
+        return GetCharacter(characterURL);
+    });
+
+    return Promise.all(characterDatas);
+}
+
+function GetCharacterNames(characters) {
+    const characterNames = [];
+
+    characters.map((character) => {
+        const characterName = character.name;
+        characterNames.push(characterName);
+    });
+
+    return characterNames;
+}
+
+async function main() {
+    const movieId = process.argv[2];
+
+    try {
+        const movieContent = await GetMovieJsonContent(movieId);
+        const charactersJson = await GetCharactersWithUrlFrom(movieContent);
+        const characterNames = GetCharacterNames(charactersJson);
+
+        characterNames.map((characterName) => {
+            console.log(characterName);
+        });
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
+main();
 

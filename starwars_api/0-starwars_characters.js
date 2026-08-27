@@ -59,6 +59,7 @@ function GetCharacterNames (characters) {
   characters.map((character) => {
     const characterName = character.name;
     characterNames.push(characterName);
+    return characterName;
   });
 
   return characterNames;
@@ -74,6 +75,7 @@ async function main () {
 
     characterNames.map((characterName) => {
       console.log(characterName);
+      return characterName;
     });
   } catch (error) {
     console.error(error.message);
@@ -81,4 +83,3 @@ async function main () {
 }
 
 main();
-
